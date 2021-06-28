@@ -1,0 +1,357 @@
+diff -ruN tlcs900h/control-registers.cpp tlcs900h_mod/control-registers.cpp
+--- tlcs900h/control-registers.cpp	2021-06-24 14:00:56.000000000 -0700
++++ tlcs900h_mod/control-registers.cpp	2021-06-28 08:48:16.212364800 -0700
+@@ -1,19 +1,19 @@
+ template<> auto TLCS900H::map(ControlRegister<n8> register) const -> maybe<n8&> {
+   switch(register.id) {
+   #define r(id, name) case id: return r.name;
+-  r(0x00, dmas[0].b0) r(0x01, dmas[0].b1) r(0x02, dmas[0].b2) r(0x03, dmas[0].b3)
+-  r(0x04, dmas[1].b0) r(0x05, dmas[1].b1) r(0x06, dmas[1].b2) r(0x07, dmas[1].b3)
+-  r(0x08, dmas[2].b0) r(0x09, dmas[2].b1) r(0x0a, dmas[2].b2) r(0x0b, dmas[2].b3)
+-  r(0x0c, dmas[3].b0) r(0x0d, dmas[3].b1) r(0x0e, dmas[3].b2) r(0x0f, dmas[3].b3)
+-  r(0x10, dmad[0].b0) r(0x11, dmad[0].b1) r(0x12, dmad[0].b2) r(0x13, dmad[0].b3)
+-  r(0x14, dmad[1].b0) r(0x15, dmad[1].b1) r(0x16, dmad[1].b2) r(0x17, dmad[1].b3)
+-  r(0x18, dmad[2].b0) r(0x19, dmad[2].b1) r(0x1a, dmad[2].b2) r(0x1b, dmad[2].b3)
+-  r(0x1c, dmad[3].b0) r(0x1d, dmad[3].b1) r(0x1e, dmad[3].b2) r(0x1f, dmad[3].b3)
+-  r(0x20, dmam[0].b0) r(0x21, dmam[0].b1) r(0x22, dmam[0].b2) r(0x23, dmam[0].b3)
+-  r(0x24, dmam[1].b0) r(0x25, dmam[1].b1) r(0x26, dmam[1].b2) r(0x27, dmam[1].b3)
+-  r(0x28, dmam[2].b0) r(0x29, dmam[2].b1) r(0x2a, dmam[2].b2) r(0x2b, dmam[2].b3)
+-  r(0x2c, dmam[3].b0) r(0x2d, dmam[3].b1) r(0x2e, dmam[3].b3) r(0x2f, dmam[3].b3)
+-  r(0x3c, intnest.b0) r(0x3d, intnest.b1)
++  r(0x00, dmas[0].b.b0) r(0x01, dmas[0].b.b1) r(0x02, dmas[0].b.b2) r(0x03, dmas[0].b.b3)
++  r(0x04, dmas[1].b.b0) r(0x05, dmas[1].b.b1) r(0x06, dmas[1].b.b2) r(0x07, dmas[1].b.b3)
++  r(0x08, dmas[2].b.b0) r(0x09, dmas[2].b.b1) r(0x0a, dmas[2].b.b2) r(0x0b, dmas[2].b.b3)
++  r(0x0c, dmas[3].b.b0) r(0x0d, dmas[3].b.b1) r(0x0e, dmas[3].b.b2) r(0x0f, dmas[3].b.b3)
++  r(0x10, dmad[0].b.b0) r(0x11, dmad[0].b.b1) r(0x12, dmad[0].b.b2) r(0x13, dmad[0].b.b3)
++  r(0x14, dmad[1].b.b0) r(0x15, dmad[1].b.b1) r(0x16, dmad[1].b.b2) r(0x17, dmad[1].b.b3)
++  r(0x18, dmad[2].b.b0) r(0x19, dmad[2].b.b1) r(0x1a, dmad[2].b.b2) r(0x1b, dmad[2].b.b3)
++  r(0x1c, dmad[3].b.b0) r(0x1d, dmad[3].b.b1) r(0x1e, dmad[3].b.b2) r(0x1f, dmad[3].b.b3)
++  r(0x20, dmam[0].b.b0) r(0x21, dmam[0].b.b1) r(0x22, dmam[0].b.b2) r(0x23, dmam[0].b.b3)
++  r(0x24, dmam[1].b.b0) r(0x25, dmam[1].b.b1) r(0x26, dmam[1].b.b2) r(0x27, dmam[1].b.b3)
++  r(0x28, dmam[2].b.b0) r(0x29, dmam[2].b.b1) r(0x2a, dmam[2].b.b2) r(0x2b, dmam[2].b.b3)
++  r(0x2c, dmam[3].b.b0) r(0x2d, dmam[3].b.b1) r(0x2e, dmam[3].b.b3) r(0x2f, dmam[3].b.b3)
++  r(0x3c, intnest.b.b0) r(0x3d, intnest.b.b1)
+   #undef r
+   }
+   return nothing;
+@@ -22,19 +22,19 @@
+ template<> auto TLCS900H::map(ControlRegister<n16> register) const -> maybe<n16&> {
+   switch(register.id & ~1) {
+   #define r(id, name) case id: return r.name;
+-  r(0x00, dmas[0].w0) r(0x02, dmas[0].w1)
+-  r(0x04, dmas[1].w0) r(0x06, dmas[1].w1)
+-  r(0x08, dmas[2].w0) r(0x0a, dmas[2].w1)
+-  r(0x0c, dmas[3].w0) r(0x0e, dmas[3].w1)
+-  r(0x10, dmad[0].w0) r(0x12, dmad[0].w1)
+-  r(0x14, dmad[1].w0) r(0x16, dmad[1].w1)
+-  r(0x18, dmad[2].w0) r(0x1a, dmad[2].w1)
+-  r(0x1c, dmad[3].w0) r(0x1e, dmad[3].w1)
+-  r(0x20, dmam[0].w0) r(0x22, dmam[0].w1)
+-  r(0x24, dmam[1].w0) r(0x26, dmam[1].w1)
+-  r(0x28, dmam[2].w0) r(0x2a, dmam[2].w1)
+-  r(0x2c, dmam[3].w0) r(0x2e, dmam[3].w1)
+-  r(0x3c, intnest.w0)
++  r(0x00, dmas[0].w.w0) r(0x02, dmas[0].w.w1)
++  r(0x04, dmas[1].w.w0) r(0x06, dmas[1].w.w1)
++  r(0x08, dmas[2].w.w0) r(0x0a, dmas[2].w.w1)
++  r(0x0c, dmas[3].w.w0) r(0x0e, dmas[3].w.w1)
++  r(0x10, dmad[0].w.w0) r(0x12, dmad[0].w.w1)
++  r(0x14, dmad[1].w.w0) r(0x16, dmad[1].w.w1)
++  r(0x18, dmad[2].w.w0) r(0x1a, dmad[2].w.w1)
++  r(0x1c, dmad[3].w.w0) r(0x1e, dmad[3].w.w1)
++  r(0x20, dmam[0].w.w0) r(0x22, dmam[0].w.w1)
++  r(0x24, dmam[1].w.w0) r(0x26, dmam[1].w.w1)
++  r(0x28, dmam[2].w.w0) r(0x2a, dmam[2].w.w1)
++  r(0x2c, dmam[3].w.w0) r(0x2e, dmam[3].w.w1)
++  r(0x3c, intnest.w.w0)
+   #undef r
+   }
+   return nothing;
+@@ -43,19 +43,19 @@
+ template<> auto TLCS900H::map(ControlRegister<n32> register) const -> maybe<n32&> {
+   switch(register.id & ~1) {
+   #define r(id, name) case id: return r.name;
+-  r(0x00, dmas[0].l0)
+-  r(0x04, dmas[1].l0)
+-  r(0x08, dmas[2].l0)
+-  r(0x0c, dmas[3].l0)
+-  r(0x10, dmad[0].l0)
+-  r(0x14, dmad[1].l0)
+-  r(0x18, dmad[2].l0)
+-  r(0x1c, dmad[3].l0)
+-  r(0x20, dmam[0].l0)
+-  r(0x24, dmam[1].l0)
+-  r(0x28, dmam[2].l0)
+-  r(0x2c, dmam[3].l0)
+-  r(0x3c, intnest.l0)
++  r(0x00, dmas[0].l.l0)
++  r(0x04, dmas[1].l.l0)
++  r(0x08, dmas[2].l.l0)
++  r(0x0c, dmas[3].l.l0)
++  r(0x10, dmad[0].l.l0)
++  r(0x14, dmad[1].l.l0)
++  r(0x18, dmad[2].l.l0)
++  r(0x1c, dmad[3].l.l0)
++  r(0x20, dmam[0].l.l0)
++  r(0x24, dmam[1].l.l0)
++  r(0x28, dmam[2].l.l0)
++  r(0x2c, dmam[3].l.l0)
++  r(0x3c, intnest.l.l0)
+   #undef r
+   }
+   return nothing;
+diff -ruN tlcs900h/disassembler.cpp tlcs900h_mod/disassembler.cpp
+--- tlcs900h/disassembler.cpp	2021-06-24 14:08:58.000000000 -0700
++++ tlcs900h_mod/disassembler.cpp	2021-06-28 08:51:25.881792100 -0700
+@@ -638,14 +638,14 @@
+ 
+ noinline auto TLCS900H::disassembleContext() -> string {
+   string output;
+-  output.append("XWA:", hex(r.xwa[RFP].l0, 8L), " ");
+-  output.append("XBC:", hex(r.xbc[RFP].l0, 8L), " ");
+-  output.append("XDE:", hex(r.xde[RFP].l0, 8L), " ");
+-  output.append("XHL:", hex(r.xhl[RFP].l0, 8L), " ");
+-  output.append("XIX:", hex(r.xix.l0, 8L), " ");
+-  output.append("XIY:", hex(r.xiy.l0, 8L), " ");
+-  output.append("XIZ:", hex(r.xiz.l0, 8L), " ");
+-  output.append("XSP:", hex(r.xsp.l0, 8L), " ");
++  output.append("XWA:", hex(r.xwa[RFP].l.l0, 8L), " ");
++  output.append("XBC:", hex(r.xbc[RFP].l.l0, 8L), " ");
++  output.append("XDE:", hex(r.xde[RFP].l.l0, 8L), " ");
++  output.append("XHL:", hex(r.xhl[RFP].l.l0, 8L), " ");
++  output.append("XIX:", hex(r.xix.l.l0, 8L), " ");
++  output.append("XIY:", hex(r.xiy.l.l0, 8L), " ");
++  output.append("XIZ:", hex(r.xiz.l.l0, 8L), " ");
++  output.append("XSP:", hex(r.xsp.l.l0, 8L), " ");
+   output.append("IFF:", IFF, " ");
+   output.append("RFP:", RFP, " ");
+   output.append(SF ? "S" : "s");
+diff -ruN tlcs900h/dma.cpp tlcs900h_mod/dma.cpp
+--- tlcs900h/dma.cpp	2021-06-24 14:02:39.000000000 -0700
++++ tlcs900h_mod/dma.cpp	2021-06-28 08:50:04.401130400 -0700
+@@ -1,8 +1,8 @@
+ auto TLCS900H::dma(n2 channel) -> bool {
+-  auto& source = r.dmas[channel].l0;
+-  auto& target = r.dmad[channel].l0;
+-  auto& length = r.dmam[channel].w0;  //0 = 65536
+-  auto& config = r.dmam[channel].w1;
++  auto& source = r.dmas[channel].l.l0;
++  auto& target = r.dmad[channel].l.l0;
++  auto& length = r.dmam[channel].w.w0;  //0 = 65536
++  auto& config = r.dmam[channel].w.w1;
+ 
+   n32 mode = config.bit(2,4);
+   n32 size;
+diff -ruN tlcs900h/memory.cpp tlcs900h_mod/memory.cpp
+--- tlcs900h/memory.cpp	2021-06-24 14:02:19.000000000 -0700
++++ tlcs900h_mod/memory.cpp	2021-06-28 08:49:35.104062100 -0700
+@@ -9,7 +9,7 @@
+ 
+ //
+ 
+-#define XSP r.xsp.l0
++#define XSP r.xsp.l.l0
+ 
+ template<typename T> auto TLCS900H::pop(T data) -> void {
+   auto value = typename T::type();
+diff -ruN tlcs900h/prefetch.cpp tlcs900h_mod/prefetch.cpp
+--- tlcs900h/prefetch.cpp	2021-06-24 14:01:25.000000000 -0700
++++ tlcs900h_mod/prefetch.cpp	2021-06-28 08:49:23.163889900 -0700
+@@ -1,4 +1,4 @@
+-#define PC r.pc.l0
++#define PC r.pc.l.l0
+ 
+ //called on branches, returns, and interrupts
+ auto TLCS900H::invalidate() -> void {
+diff -ruN tlcs900h/registers.cpp tlcs900h_mod/registers.cpp
+--- tlcs900h/registers.cpp	2021-06-24 13:58:42.000000000 -0700
++++ tlcs900h_mod/registers.cpp	2021-06-28 08:46:45.759367500 -0700
+@@ -4,34 +4,34 @@
+ template<> auto TLCS900H::map(Register<n8> register) const -> maybe<n8&> {
+   switch(register.id) {
+   #define r(id, name) case id: return r.name;
+-  r(0x00, xwa[0].b0) r(0x01, xwa[0].b1) r(0x02, xwa[0].b2) r(0x03, xwa[0].b3)
+-  r(0x04, xbc[0].b0) r(0x05, xbc[0].b1) r(0x06, xbc[0].b2) r(0x07, xbc[0].b3)
+-  r(0x08, xde[0].b0) r(0x09, xde[0].b1) r(0x0a, xde[0].b2) r(0x0b, xde[0].b3)
+-  r(0x0c, xhl[0].b0) r(0x0d, xhl[0].b1) r(0x0e, xhl[0].b2) r(0x0f, xhl[0].b3)
+-  r(0x10, xwa[1].b0) r(0x11, xwa[1].b1) r(0x12, xwa[1].b2) r(0x13, xwa[1].b3)
+-  r(0x14, xbc[1].b0) r(0x15, xbc[1].b1) r(0x16, xbc[1].b2) r(0x17, xbc[1].b3)
+-  r(0x18, xde[1].b0) r(0x19, xde[1].b1) r(0x1a, xde[1].b2) r(0x1b, xde[1].b3)
+-  r(0x1c, xhl[1].b0) r(0x1d, xhl[1].b1) r(0x1e, xhl[1].b2) r(0x1f, xhl[1].b3)
+-  r(0x20, xwa[2].b0) r(0x21, xwa[2].b1) r(0x22, xwa[2].b2) r(0x23, xwa[2].b3)
+-  r(0x24, xbc[2].b0) r(0x25, xbc[2].b1) r(0x26, xbc[2].b2) r(0x27, xbc[2].b3)
+-  r(0x28, xde[2].b0) r(0x29, xde[2].b1) r(0x2a, xde[2].b2) r(0x2b, xde[2].b3)
+-  r(0x2c, xhl[2].b0) r(0x2d, xhl[2].b1) r(0x2e, xhl[2].b2) r(0x2f, xhl[2].b3)
+-  r(0x30, xwa[3].b0) r(0x31, xwa[3].b1) r(0x32, xwa[3].b2) r(0x33, xwa[3].b3)
+-  r(0x34, xbc[3].b0) r(0x35, xbc[3].b1) r(0x36, xbc[3].b2) r(0x37, xbc[3].b3)
+-  r(0x38, xde[3].b0) r(0x39, xde[3].b1) r(0x3a, xde[3].b2) r(0x3b, xde[3].b3)
+-  r(0x3c, xhl[3].b0) r(0x3d, xhl[3].b1) r(0x3e, xhl[3].b2) r(0x3f, xhl[3].b3)
+-  r(0xd0, xwa[p].b0) r(0xd1, xwa[p].b1) r(0xd2, xwa[p].b2) r(0xd3, xwa[p].b3)
+-  r(0xd4, xbc[p].b0) r(0xd5, xbc[p].b1) r(0xd6, xbc[p].b2) r(0xd7, xbc[p].b3)
+-  r(0xd8, xde[p].b0) r(0xd9, xde[p].b1) r(0xda, xde[p].b2) r(0xdb, xde[p].b3)
+-  r(0xdc, xhl[p].b0) r(0xdd, xhl[p].b1) r(0xde, xhl[p].b2) r(0xdf, xhl[p].b3)
+-  r(0xe0, xwa[a].b0) r(0xe1, xwa[a].b1) r(0xe2, xwa[a].b2) r(0xe3, xwa[a].b3)
+-  r(0xe4, xbc[a].b0) r(0xe5, xbc[a].b1) r(0xe6, xbc[a].b2) r(0xe7, xbc[a].b3)
+-  r(0xe8, xde[a].b0) r(0xe9, xde[a].b1) r(0xea, xde[a].b2) r(0xeb, xde[a].b3)
+-  r(0xec, xhl[a].b0) r(0xed, xhl[a].b1) r(0xee, xhl[a].b2) r(0xef, xhl[a].b3)
+-  r(0xf0, xix   .b0) r(0xf1, xix   .b1) r(0xf2, xix   .b2) r(0xf3, xix   .b3)
+-  r(0xf4, xiy   .b0) r(0xf5, xiy   .b1) r(0xf6, xiy   .b2) r(0xf7, xiy   .b3)
+-  r(0xf8, xiz   .b0) r(0xf9, xiz   .b1) r(0xfa, xiz   .b2) r(0xfb, xiz   .b3)
+-  r(0xfc, xsp   .b0) r(0xfd, xsp   .b1) r(0xfe, xsp   .b2) r(0xff, xsp   .b3)
++  r(0x00, xwa[0].b.b0) r(0x01, xwa[0].b.b1) r(0x02, xwa[0].b.b2) r(0x03, xwa[0].b.b3)
++  r(0x04, xbc[0].b.b0) r(0x05, xbc[0].b.b1) r(0x06, xbc[0].b.b2) r(0x07, xbc[0].b.b3)
++  r(0x08, xde[0].b.b0) r(0x09, xde[0].b.b1) r(0x0a, xde[0].b.b2) r(0x0b, xde[0].b.b3)
++  r(0x0c, xhl[0].b.b0) r(0x0d, xhl[0].b.b1) r(0x0e, xhl[0].b.b2) r(0x0f, xhl[0].b.b3)
++  r(0x10, xwa[1].b.b0) r(0x11, xwa[1].b.b1) r(0x12, xwa[1].b.b2) r(0x13, xwa[1].b.b3)
++  r(0x14, xbc[1].b.b0) r(0x15, xbc[1].b.b1) r(0x16, xbc[1].b.b2) r(0x17, xbc[1].b.b3)
++  r(0x18, xde[1].b.b0) r(0x19, xde[1].b.b1) r(0x1a, xde[1].b.b2) r(0x1b, xde[1].b.b3)
++  r(0x1c, xhl[1].b.b0) r(0x1d, xhl[1].b.b1) r(0x1e, xhl[1].b.b2) r(0x1f, xhl[1].b.b3)
++  r(0x20, xwa[2].b.b0) r(0x21, xwa[2].b.b1) r(0x22, xwa[2].b.b2) r(0x23, xwa[2].b.b3)
++  r(0x24, xbc[2].b.b0) r(0x25, xbc[2].b.b1) r(0x26, xbc[2].b.b2) r(0x27, xbc[2].b.b3)
++  r(0x28, xde[2].b.b0) r(0x29, xde[2].b.b1) r(0x2a, xde[2].b.b2) r(0x2b, xde[2].b.b3)
++  r(0x2c, xhl[2].b.b0) r(0x2d, xhl[2].b.b1) r(0x2e, xhl[2].b.b2) r(0x2f, xhl[2].b.b3)
++  r(0x30, xwa[3].b.b0) r(0x31, xwa[3].b.b1) r(0x32, xwa[3].b.b2) r(0x33, xwa[3].b.b3)
++  r(0x34, xbc[3].b.b0) r(0x35, xbc[3].b.b1) r(0x36, xbc[3].b.b2) r(0x37, xbc[3].b.b3)
++  r(0x38, xde[3].b.b0) r(0x39, xde[3].b.b1) r(0x3a, xde[3].b.b2) r(0x3b, xde[3].b.b3)
++  r(0x3c, xhl[3].b.b0) r(0x3d, xhl[3].b.b1) r(0x3e, xhl[3].b.b2) r(0x3f, xhl[3].b.b3)
++  r(0xd0, xwa[p].b.b0) r(0xd1, xwa[p].b.b1) r(0xd2, xwa[p].b.b2) r(0xd3, xwa[p].b.b3)
++  r(0xd4, xbc[p].b.b0) r(0xd5, xbc[p].b.b1) r(0xd6, xbc[p].b.b2) r(0xd7, xbc[p].b.b3)
++  r(0xd8, xde[p].b.b0) r(0xd9, xde[p].b.b1) r(0xda, xde[p].b.b2) r(0xdb, xde[p].b.b3)
++  r(0xdc, xhl[p].b.b0) r(0xdd, xhl[p].b.b1) r(0xde, xhl[p].b.b2) r(0xdf, xhl[p].b.b3)
++  r(0xe0, xwa[a].b.b0) r(0xe1, xwa[a].b.b1) r(0xe2, xwa[a].b.b2) r(0xe3, xwa[a].b.b3)
++  r(0xe4, xbc[a].b.b0) r(0xe5, xbc[a].b.b1) r(0xe6, xbc[a].b.b2) r(0xe7, xbc[a].b.b3)
++  r(0xe8, xde[a].b.b0) r(0xe9, xde[a].b.b1) r(0xea, xde[a].b.b2) r(0xeb, xde[a].b.b3)
++  r(0xec, xhl[a].b.b0) r(0xed, xhl[a].b.b1) r(0xee, xhl[a].b.b2) r(0xef, xhl[a].b.b3)
++  r(0xf0, xix   .b.b0) r(0xf1, xix   .b.b1) r(0xf2, xix   .b.b2) r(0xf3, xix   .b.b3)
++  r(0xf4, xiy   .b.b0) r(0xf5, xiy   .b.b1) r(0xf6, xiy   .b.b2) r(0xf7, xiy   .b.b3)
++  r(0xf8, xiz   .b.b0) r(0xf9, xiz   .b.b1) r(0xfa, xiz   .b.b2) r(0xfb, xiz   .b.b3)
++  r(0xfc, xsp   .b.b0) r(0xfd, xsp   .b.b1) r(0xfe, xsp   .b.b2) r(0xff, xsp   .b.b3)
+   #undef r
+   }
+   return nothing;
+@@ -40,20 +40,20 @@
+ template<> auto TLCS900H::map(Register<n16> register) const -> maybe<n16&> {
+   switch(register.id & ~1) {
+   #define r(id, name) case id: return r.name;
+-  r(0x00, xwa[0].w0) r(0x02, xwa[0].w1) r(0x04, xbc[0].w0) r(0x06, xbc[0].w1)
+-  r(0x08, xde[0].w0) r(0x0a, xde[0].w1) r(0x0c, xhl[0].w0) r(0x0e, xhl[0].w1)
+-  r(0x10, xwa[1].w0) r(0x12, xwa[1].w1) r(0x14, xbc[1].w0) r(0x16, xbc[1].w1)
+-  r(0x18, xde[1].w0) r(0x1a, xde[1].w1) r(0x1c, xhl[1].w0) r(0x1e, xhl[1].w1)
+-  r(0x20, xwa[2].w0) r(0x22, xwa[2].w1) r(0x24, xbc[2].w0) r(0x26, xbc[2].w1)
+-  r(0x28, xde[2].w0) r(0x2a, xde[2].w1) r(0x2c, xhl[2].w0) r(0x2e, xhl[2].w1)
+-  r(0x30, xwa[3].w0) r(0x32, xwa[3].w1) r(0x34, xbc[3].w0) r(0x36, xbc[3].w1)
+-  r(0x38, xde[3].w0) r(0x3a, xde[3].w1) r(0x3c, xhl[3].w0) r(0x3e, xhl[3].w1)
+-  r(0xd0, xwa[p].w0) r(0xd2, xwa[p].w1) r(0xd4, xbc[p].w0) r(0xd6, xbc[p].w1)
+-  r(0xd8, xde[p].w0) r(0xda, xde[p].w1) r(0xdc, xhl[p].w0) r(0xde, xhl[p].w1)
+-  r(0xe0, xwa[a].w0) r(0xe2, xwa[a].w1) r(0xe4, xbc[a].w0) r(0xe6, xbc[a].w1)
+-  r(0xe8, xde[a].w0) r(0xea, xde[a].w1) r(0xec, xhl[a].w0) r(0xee, xhl[a].w1)
+-  r(0xf0, xix   .w0) r(0xf2, xix   .w1) r(0xf4, xiy   .w0) r(0xf6, xiy   .w1)
+-  r(0xf8, xiz   .w0) r(0xfa, xiz   .w1) r(0xfc, xsp   .w0) r(0xfe, xsp   .w1)
++  r(0x00, xwa[0].w.w0) r(0x02, xwa[0].w.w1) r(0x04, xbc[0].w.w0) r(0x06, xbc[0].w.w1)
++  r(0x08, xde[0].w.w0) r(0x0a, xde[0].w.w1) r(0x0c, xhl[0].w.w0) r(0x0e, xhl[0].w.w1)
++  r(0x10, xwa[1].w.w0) r(0x12, xwa[1].w.w1) r(0x14, xbc[1].w.w0) r(0x16, xbc[1].w.w1)
++  r(0x18, xde[1].w.w0) r(0x1a, xde[1].w.w1) r(0x1c, xhl[1].w.w0) r(0x1e, xhl[1].w.w1)
++  r(0x20, xwa[2].w.w0) r(0x22, xwa[2].w.w1) r(0x24, xbc[2].w.w0) r(0x26, xbc[2].w.w1)
++  r(0x28, xde[2].w.w0) r(0x2a, xde[2].w.w1) r(0x2c, xhl[2].w.w0) r(0x2e, xhl[2].w.w1)
++  r(0x30, xwa[3].w.w0) r(0x32, xwa[3].w.w1) r(0x34, xbc[3].w.w0) r(0x36, xbc[3].w.w1)
++  r(0x38, xde[3].w.w0) r(0x3a, xde[3].w.w1) r(0x3c, xhl[3].w.w0) r(0x3e, xhl[3].w.w1)
++  r(0xd0, xwa[p].w.w0) r(0xd2, xwa[p].w.w1) r(0xd4, xbc[p].w.w0) r(0xd6, xbc[p].w.w1)
++  r(0xd8, xde[p].w.w0) r(0xda, xde[p].w.w1) r(0xdc, xhl[p].w.w0) r(0xde, xhl[p].w.w1)
++  r(0xe0, xwa[a].w.w0) r(0xe2, xwa[a].w.w1) r(0xe4, xbc[a].w.w0) r(0xe6, xbc[a].w.w1)
++  r(0xe8, xde[a].w.w0) r(0xea, xde[a].w.w1) r(0xec, xhl[a].w.w0) r(0xee, xhl[a].w.w1)
++  r(0xf0, xix   .w.w0) r(0xf2, xix   .w.w1) r(0xf4, xiy   .w.w0) r(0xf6, xiy   .w.w1)
++  r(0xf8, xiz   .w.w0) r(0xfa, xiz   .w.w1) r(0xfc, xsp   .w.w0) r(0xfe, xsp   .w.w1)
+   #undef r
+   }
+   return nothing;
+@@ -62,13 +62,13 @@
+ template<> auto TLCS900H::map(Register<n32> register) const -> maybe<n32&> {
+   switch(register.id & ~3) {
+   #define r(id, name) case id: return r.name;
+-  r(0x00, xwa[0].l0) r(0x04, xbc[0].l0) r(0x08, xde[0].l0) r(0x0c, xhl[0].l0)
+-  r(0x10, xwa[1].l0) r(0x14, xbc[1].l0) r(0x18, xde[1].l0) r(0x1c, xhl[1].l0)
+-  r(0x20, xwa[2].l0) r(0x24, xbc[2].l0) r(0x28, xde[2].l0) r(0x2c, xhl[2].l0)
+-  r(0x30, xwa[3].l0) r(0x34, xbc[3].l0) r(0x38, xde[3].l0) r(0x3c, xhl[3].l0)
+-  r(0xd0, xwa[p].l0) r(0xd4, xbc[p].l0) r(0xd8, xde[p].l0) r(0xdc, xhl[p].l0)
+-  r(0xe0, xwa[a].l0) r(0xe4, xbc[a].l0) r(0xe8, xde[a].l0) r(0xec, xhl[a].l0)
+-  r(0xf0, xix   .l0) r(0xf4, xiy   .l0) r(0xf8, xiz   .l0) r(0xfc, xsp   .l0)
++  r(0x00, xwa[0].l.l0) r(0x04, xbc[0].l.l0) r(0x08, xde[0].l.l0) r(0x0c, xhl[0].l.l0)
++  r(0x10, xwa[1].l.l0) r(0x14, xbc[1].l.l0) r(0x18, xde[1].l.l0) r(0x1c, xhl[1].l.l0)
++  r(0x20, xwa[2].l.l0) r(0x24, xbc[2].l.l0) r(0x28, xde[2].l.l0) r(0x2c, xhl[2].l.l0)
++  r(0x30, xwa[3].l.l0) r(0x34, xbc[3].l.l0) r(0x38, xde[3].l.l0) r(0x3c, xhl[3].l.l0)
++  r(0xd0, xwa[p].l.l0) r(0xd4, xbc[p].l.l0) r(0xd8, xde[p].l.l0) r(0xdc, xhl[p].l.l0)
++  r(0xe0, xwa[a].l.l0) r(0xe4, xbc[a].l.l0) r(0xe8, xde[a].l.l0) r(0xec, xhl[a].l.l0)
++  r(0xf0, xix   .l.l0) r(0xf4, xiy   .l.l0) r(0xf8, xiz   .l.l0) r(0xfc, xsp   .l.l0)
+   #undef r
+   }
+   return nothing;
+@@ -123,10 +123,10 @@
+ }
+ 
+ auto TLCS900H::load(ProgramCounter) const -> n32 {
+-  return r.pc.l0;
++  return r.pc.l.l0;
+ }
+ 
+ auto TLCS900H::store(ProgramCounter, n32 data) -> void {
+-  r.pc.l0 = data;
++  r.pc.l.l0 = data;
+   invalidate();
+ }
+diff -ruN tlcs900h/serialization.cpp tlcs900h_mod/serialization.cpp
+--- tlcs900h/serialization.cpp	2021-06-24 14:03:00.000000000 -0700
++++ tlcs900h_mod/serialization.cpp	2021-06-28 08:50:50.502959500 -0700
+@@ -1,22 +1,22 @@
+ auto TLCS900H::serialize(serializer& s) -> void {
+   for(u32 n : range(4)) {
+-    s(r.xwa[n].l0);
+-    s(r.xbc[n].l0);
+-    s(r.xde[n].l0);
+-    s(r.xhl[n].l0);
++    s(r.xwa[n].l.l0);
++    s(r.xbc[n].l.l0);
++    s(r.xde[n].l.l0);
++    s(r.xhl[n].l.l0);
+   }
+-  s(r.xix.l0);
+-  s(r.xiy.l0);
+-  s(r.xiz.l0);
+-  s(r.xsp.l0);
+-  s(r.pc.l0);
++  s(r.xix.l.l0);
++  s(r.xiy.l.l0);
++  s(r.xiz.l.l0);
++  s(r.xsp.l.l0);
++  s(r.pc.l.l0);
+ 
+   for(u32 n : range(4)) {
+-    s(r.dmas[n].l0);
+-    s(r.dmad[n].l0);
+-    s(r.dmam[n].l0);
++    s(r.dmas[n].l.l0);
++    s(r.dmad[n].l.l0);
++    s(r.dmam[n].l.l0);
+   }
+-  s(r.intnest.l0);
++  s(r.intnest.l.l0);
+ 
+   s(CF);
+   s(NF);
+diff -ruN tlcs900h/tlcs900h.hpp tlcs900h_mod/tlcs900h.hpp
+--- tlcs900h/tlcs900h.hpp	2021-06-24 14:06:11.000000000 -0700
++++ tlcs900h_mod/tlcs900h.hpp	2021-06-28 08:25:41.379746700 -0700
+@@ -183,10 +183,10 @@
+   auto serialize(serializer&) -> void;
+ 
+   union DataRegister {
+-    DataRegister() { l0 = 0; }
+-    struct { n32 order_lsb1(l0); };
+-    struct { n16 order_lsb2(w0, w1); };
+-    struct { n8  order_lsb4(b0, b1, b2, b3); };
++    DataRegister() { l.l0 = 0; }
++    struct { n32 order_lsb1(l0); } l;
++    struct { n16 order_lsb2(w0, w1); } w;
++    struct { n8 order_lsb4(b0, b1, b2, b3); } b;
+   };
+ 
+   struct Registers {
